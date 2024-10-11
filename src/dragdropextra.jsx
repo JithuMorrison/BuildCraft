@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import stack from './contentstackconfig';
+import React, { useState } from 'react';
 import './drop.css'; // Ensure you have this CSS file for styling
+
+const images = [
+  { id: 1, src: 'https://eu-images.contentstack.com/v3/assets/bltab5f33fe9473d688/blt365f43d2abd911b1/670926b749616b1072576e41/1.png' },
+  { id: 2, src: 'https://eu-images.contentstack.com/v3/assets/bltab5f33fe9473d688/blt365f43d2abd911b1/670926b749616b1072576e41/0.png' },
+  { id: 3, src: 'https://via.placeholder.com/100.png?text=Image+3' },
+];
 
 const DragDropPage = () => {
   const [designAreaItems, setDesignAreaItems] = useState([]);
@@ -8,37 +13,6 @@ const DragDropPage = () => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [resizingItem, setResizingItem] = useState(null);
   const [resizeOffset, setResizeOffset] = useState({ width: 0, height: 0 });
-  const [images, setImages] = useState([]);
-
-  // Fetch images from Contentstack
-  const fetchImages = async () => {
-    try {
-      const Query = stack.ContentType('contents').Query();
-      const result = await Query.toJSON().find(); // Fetching entries from Contentstack
-      const fetchedImages = [];
-      console.log(result[0]);
-      if (result[0].length > 0) {
-        for (let i = 0; i < result[0].length; i++) {
-          const entry = result[0][i];
-          console.log(entry);
-          // Check if images exist and access the first image URL
-          const imageUrl = entry.contentimage.url!=null ? entry.contentimage.url : '';
-
-          fetchedImages.push({
-            id: entry.uid, // Use the unique identifier
-            src: imageUrl,  // Safely access the image URL
-          });
-        }
-      }
-      
-      setImages(fetchedImages);
-    } catch (error) {
-      console.error('Error fetching images from Contentstack:', error);
-    }
-  };
-  useEffect(() => {
-    fetchImages(); // Fetch images on component mount
-  }, []);
 
   const handleDragStart = (e, item) => {
     e.dataTransfer.setData('imageId', item.id);
@@ -48,7 +22,7 @@ const DragDropPage = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     const imageId = e.dataTransfer.getData('imageId');
-    const draggedImage = images.find((img) => img.id === imageId);
+    const draggedImage = images.find((img) => img.id === parseInt(imageId));
 
     const designArea = e.target.getBoundingClientRect();
     const x = e.clientX - designArea.left;
