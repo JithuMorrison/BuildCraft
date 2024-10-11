@@ -1,42 +1,204 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset some styles to avoid default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body, html {
+  width: 100%; /* Ensure the body and html take up full width */
+  margin: 0; /* Remove default body margin */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home-container {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack header, main, and footer vertically */
+  min-height: 100vh; /* Ensure it takes full height */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.fixed-header {
+  background-color: #4A90E2; /* Header background color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Smaller padding */
+  text-align: center; /* Center text */
+  width: 100%; /* Full width */
+  position: fixed; /* Fix header to the top */
+  top: 0; /* Position at the top */
+  left: 0; /* Position at the left */
+  right: 0; /* Position at the right */
+  z-index: 1000; /* Ensure header stays on top of other elements */
 }
 
-.card {
-  padding: 2em;
+.large-header {
+  margin-top: 130px; /* Space for fixed header */
+  height: 50vh; /* Height for large header (50% of viewport height) */
+  display: flex; /* Center content */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  background-color: #f0f0f0; /* Optional background color */
 }
 
-.read-the-docs {
-  color: #888;
+.header-image {
+  max-width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  width: 1700px;
+}
+
+nav {
+  margin-top: 10px; /* Adjust space above navigation */
+}
+
+nav ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+}
+
+nav ul li {
+  display: inline; /* Display items in a line */
+  margin: 0 10px; /* Adjust space between items */
+}
+
+nav ul li a {
+  color: white; /* Link color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Bold text */
+}
+
+nav ul li a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.footer {
+  background-color: #333; /* Footer background color */
+  color: white; /* Text color */
+  text-align: center; /* Center text */
+  padding: 20px; /* Padding around footer */
+  width: 100%; /* Full width */
+}
+
+.footer p {
+  margin: 5px 0; /* Margin between paragraphs */
+}
+
+.footer a {
+  color: #4A90E2; /* Link color in footer */
+  text-decoration: none; /* Remove underline */
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.home-main {
+  margin-top: 170px; /* No additional margin needed since headers are handled */
+  padding: 20px; /* Padding for main content */
+  font-family: Arial, sans-serif; /* Font style */
+  flex-grow: 1; /* Allow main to grow and fill space */
+}
+
+.home-main h2 {
+  color: #333; /* Section heading color */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.home-main p {
+  line-height: 1.6; /* Line height for readability */
+  margin-bottom: 15px; /* Space below paragraphs */
+}
+
+.home-main img {
+  max-width: 100%; /* Responsive images */
+  height: auto; /* Maintain aspect ratio */
+  margin: 10px 0; /* Space above and below images */
+}
+
+.home-main .cta-button {
+  display: inline-block; /* Display as block */
+  padding: 10px 20px; /* Padding inside button */
+  background-color: #4A90E2; /* Button background color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Bold text */
+}
+
+.home-main .cta-button:hover {
+  background-color: #357ABD; /* Darker shade on hover */
+}
+
+
+.main-layout {
+  display: flex; /* Use flexbox for layout */
+}
+
+.sidebaro {
+  position: fixed; /* Fix the sidebaro */
+  top: 0; /* Position it at the top */
+  left: 0; /* Align it to the left */
+  width: 300px; /* Set the width of the sidebaro */
+  height: 100vh; /* Full height of the viewport */
+  background-color: #f0f0f0; /* Background color for the sidebaro */
+  padding: 20px; /* Padding inside the sidebaro */
+  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
+  margin-top: 110px;
+}
+
+.sidebaro h2 {
+  margin-bottom: 15px; /* Space below the heading */
+}
+
+.sidebaro ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+}
+
+.sidebaro ul li {
+  margin-bottom: 10px; /* Space between items */
+}
+
+.sidebaro ul li a {
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Text color */
+}
+
+.sidebaro ul li a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.home-main {
+  flex-grow: 1; /* Allow main to grow and fill space */
+  padding: 20px; /* Padding for main content */
+}
+
+.home-main h2 {
+  color: #333; /* Section heading color */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.home-main p {
+  line-height: 1.6; /* Line height for readability */
+  margin-bottom: 15px; /* Space below paragraphs */
+}
+
+.toggle-button {
+  position: fixed; /* Fixed position for button */
+  top: 10px; /* Position at the top */
+  left: 10px; /* Position on the left */
+  background-color: #4A90E2; /* Button background color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding inside button */
+  cursor: pointer; /* Pointer on hover */
+  z-index: 1000; /* Ensure button stays on top */
+}
+
+.toggle-button:focus {
+  outline: none; /* Remove the default focus outline */
+  box-shadow: none; /* Remove any box shadow */
+}
+
+.toggle-button:hover {
+  background-color: #357ABD; /* Darker shade on hover */
 }

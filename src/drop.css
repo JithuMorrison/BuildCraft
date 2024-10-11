@@ -1,0 +1,63 @@
+.drag-drop-container {
+    display: flex;
+    height: 100vh;
+    gap: 10px; /* Adds space between the design area and sidebar */
+    position: relative; /* Needed for absolute positioning of images */
+  }
+  
+  .sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    margin-top: 0;
+    padding: 10px;
+    margin-left: -10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column; /* Stack images vertically */
+  }
+  
+  .design-area {
+    flex: 1; /* Takes up remaining space */
+    border: 2px dashed #aaa;
+    position: relative; /* Needed for absolute positioning of dropped images */
+    overflow: hidden; /* Prevents overflow of images */
+    width: 1448px;
+    min-height: 600px; /* Set minimum height for the design area */
+    background-color: #bbfbfa; /* Optional background color for visibility */
+  }
+  
+  /* Sidebar images */
+  .sidebar-image {
+    width: 100px; /* Fixed size for sidebar images */
+    height: 100px;
+    margin: 10px 0;
+    cursor: grab;
+  }
+  
+  /* Dropped images */
+  .dropped-image {
+    width: 100px; /* Fixed size for dropped images */
+    height: 100px;
+    margin: 0; /* Reset margin */
+  }
+  
+  /* Additional styles for positioning the sidebar */
+  .drag-drop-container {
+    flex-direction: row; /* Ensures sidebar is on the left of the design area */
+  }
+  
+  /* Add these styles if you want to enhance the button appearance */
+.resize-handle {
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: nwse-resize;
+  }
+  
+  .dropped-image {
+    cursor: move;
+  }
+  
