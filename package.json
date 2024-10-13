@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "contentstack": "^3.21.0",
+    "html2canvas": "^1.4.1",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.1",

@@ -184,12 +184,12 @@ nav ul li a:hover {
 .toggle-button {
   position: fixed; /* Fixed position for button */
   top: 10px; /* Position at the top */
-  left: 10px; /* Position on the left */
+  left: 90px; /* Position on the left */
   background-color: #4A90E2; /* Button background color */
   color: white; /* Text color */
   border: none; /* No border */
   border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding inside button */
+  width: 125px;
   cursor: pointer; /* Pointer on hover */
   z-index: 1000; /* Ensure button stays on top */
 }
