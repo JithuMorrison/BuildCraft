@@ -10,13 +10,10 @@ const Header = () => {
     const fetchHeaderData = async () => {
       try {
         const response = await stack.ContentType(CONTENTSTACK_HEADER_CONTENT_TYPE).Query().toJSON().find();
-        console.log(response);
         
         // Access the first entry's header image URL
         const data = response[0][0]; // Get the first entry
         const headerImageUrl = data.headerimage.url; // Get the image URL
-        
-        console.log(headerImageUrl);
         setHeaderData({
           title: data.title,
           imageUrl: headerImageUrl // Store the title and image URL in state

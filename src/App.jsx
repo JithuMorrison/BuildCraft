@@ -3,6 +3,8 @@ import { useState } from 'react';
 import './App.css';
 import HomePage from './homepage';
 import DragDropPage from './draganddroppg';
+import BlogPage from './blogpage';
+import InfoPage from './info';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +23,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/drag-drop" element={<DragDropPage />} />
+          <Route path="/blog" element={<BlogPage/>} />
+          <Route path="/info" element={<InfoPage/>} />
         </Routes>
       </div>
     </Router>

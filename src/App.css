@@ -138,10 +138,12 @@ nav ul li a:hover {
   left: 0; /* Align it to the left */
   width: 300px; /* Set the width of the sidebaro */
   height: 100vh; /* Full height of the viewport */
-  background-color: #f0f0f0; /* Background color for the sidebaro */
+  background-color: #393737; /* Background color for the sidebaro */
   padding: 20px; /* Padding inside the sidebaro */
   overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
   margin-top: 110px;
+  z-index: 1000;
+  text-align: center;
 }
 
 .sidebaro h2 {
@@ -159,7 +161,7 @@ nav ul li a:hover {
 
 .sidebaro ul li a {
   text-decoration: none; /* Remove underline */
-  color: #333; /* Text color */
+  color: #a8a5a5; /* Text color */
 }
 
 .sidebaro ul li a:hover {
@@ -169,17 +171,138 @@ nav ul li a:hover {
 .home-main {
   flex-grow: 1; /* Allow main to grow and fill space */
   padding: 20px; /* Padding for main content */
+  background-color: darkgray; /* Background color for the card */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  position: relative; /* Position relative for absolute positioning of images */
+  overflow: hidden; /* Hide overflow to maintain card shape */
+  margin: 100px; /* Space around the card */
+  margin-top: 200px;
+  text-align: center;
 }
 
-.home-main h2 {
-  color: #333; /* Section heading color */
-  margin-bottom: 20px; /* Space below heading */
+.home-main-content {
+  padding: 20px; /* Padding for inner content */
+  position: relative; /* Position relative for content */
+  z-index: 1; /* Ensure content is above images */
 }
 
-.home-main p {
-  line-height: 1.6; /* Line height for readability */
-  margin-bottom: 15px; /* Space below paragraphs */
+.left-image,
+.right-image {
+  position: absolute; /* Position images absolutely */
+  top: 20px; /* Align with top of the card */
+  width: 100px; /* Width of the side images */
+  height: auto; /* Maintain aspect ratio */
+  opacity: 0.1; /* Low opacity for a subtle effect */
 }
+
+.left-image {
+  top: 100px;
+  left: 100px; /* Position on the left side */
+}
+
+.right-image {
+  top: 100px;
+  right: 100px; /* Position on the right side */
+}
+
+/* General Card Styles */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #333030;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card h2{
+  color:#fff;
+}
+
+.card h3{
+  color:#fff;
+}
+
+/* Hover Effect for Cards */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* About Me Section */
+.about-card {
+  background-color: #333030;
+  text-align: center;
+  padding: 40px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 550px;
+}
+
+.about-section .social-links a {
+  margin: 0 10px;
+  font-size: 18px;
+  color: #0073b1; /* LinkedIn color */
+  transition: color 0.2s ease;
+}
+
+.about-section .social-links a:hover {
+  color: #005582;
+}
+
+.services-container {
+  display: flex;
+  gap: 20px; /* Reduced gap for better spacing */
+  flex-wrap: wrap; /* Allow items to wrap */
+  justify-content: flex-start; /* Align items to the start */
+  margin-bottom: 40px;
+}
+
+.service-card {
+  flex: 0 1 calc(33.33% - 20px); /* Adjust card width to fit three in a row with space */
+  min-width: 250px; /* Minimum width for responsiveness */
+  background-color: #333030;
+  box-sizing: border-box; /* Include padding and border in element's total width */
+}
+
+/* Blog Section */
+.blog-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 900px;
+  height: 400px;
+}
+
+.blog-card {
+  flex: 1 1 30%;
+  min-width: 250px;
+}
+
+.read-more {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .services-container, .blog-container {
+    flex-direction: column;
+  }
+
+  .service-card, .blog-card {
+    min-width: 100%;
+  }
+}
+
 
 .toggle-button {
   position: fixed; /* Fixed position for button */
@@ -201,4 +324,115 @@ nav ul li a:hover {
 
 .toggle-button:hover {
   background-color: #357ABD; /* Darker shade on hover */
+}
+
+.info-page {
+  padding: 20px;
+  max-width: 800px; /* Set a max width for the content */
+  margin: auto; /* Center the content */
+}
+
+.info-section {
+  margin-bottom: 30px; /* Space between sections */
+  padding: 10px;
+  border: 1px solid #ddd; /* Optional border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background for sections */
+}
+
+.info-section h3 {
+  margin-top: 0; /* Remove margin for the first heading */
+}
+
+.info-section p {
+  color: black;
+}
+
+ul {
+  list-style-type: disc; /* Default bullet points */
+  padding-left: 20px; /* Indent the list */
+  color: #000;
+}
+
+.blog-page {
+  padding: 20px;
+  max-width: 1000px; /* Maximum width for better readability */
+  margin: auto; /* Center the content */
+}
+
+.blog-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.blog-posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
+  gap: 20px; /* Space between grid items */
+}
+
+.blog-post-card {
+  background-color: #f9f9f9; /* Light background for cards */
+  border: 1px solid #ddd; /* Border for the card */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px; /* Padding inside the card */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.2s; /* Animation effect on hover */
+}
+
+.blog-post-card:hover {
+  transform: scale(1.02); /* Scale effect on hover */
+}
+
+.blog-post-image {
+  width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Rounded corners for images */
+}
+
+.blog-post-title {
+  font-size: 1.5rem; /* Title font size */
+  margin: 10px 0; /* Margin around title */
+  color: #2c3e50; /* Darker color for title */
+}
+
+.blog-post-summary {
+  color: #555; /* Summary text color */
+}
+
+.blog-post-date {
+  font-size: 0.9rem; /* Smaller font for the date */
+  color: #777; /* Lighter color for date */
+  margin-bottom: 10px; /* Space below date */
+}
+
+.read-more-link {
+  display: inline-block; /* Block display for button effect */
+  padding: 10px 15px; /* Padding for button */
+  background-color: #2980b9; /* Button color */
+  color: white; /* Text color for button */
+  border-radius: 5px; /* Rounded corners for button */
+  text-decoration: none; /* No underline */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.read-more-link:hover {
+  background-color: #3498db; /* Lighter blue on hover */
+}
+
+.big-blog-card {
+  background-color: #454444; /* Light background for the big card */
+  border: 1px solid #2e2e2e; /* Border for the big card */
+  border-radius: 8px; /* Rounded corners for the big card */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px; /* Padding inside the big card */
+  transition: transform 0.2s; /* Animation effect on hover */
+  width: 1655px;
+  min-height: 700px;
+}
+
+.big-blog-card:hover {
+  transform: scale(1.01); /* Scale effect on hover */
 }
