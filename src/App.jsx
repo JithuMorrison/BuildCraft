@@ -5,6 +5,7 @@ import HomePage from './homepage';
 import DragDropPage from './draganddroppg';
 import BlogPage from './blogpage';
 import InfoPage from './info';
+import BlogPost from './blogpost';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +26,7 @@ function App() {
           <Route path="/drag-drop" element={<DragDropPage />} />
           <Route path="/blog" element={<BlogPage/>} />
           <Route path="/info" element={<InfoPage/>} />
+          <Route path="/:id" element={<BlogPost/>} />
         </Routes>
       </div>
     </Router>

@@ -2,6 +2,7 @@ import React from 'react';
 
 const InfoPage = () => {
   return (
+    <div className="blog-post-wrapper" style={{textAlign:'center'}}>
     <div className="info-page">
       <h2>Welcome to Our Design Platform</h2>
       
@@ -14,7 +15,7 @@ const InfoPage = () => {
 
       <section className="info-section">
         <h3>Key Features</h3>
-        <ul>
+        <ul style={{listStyleType:'none'}}>
           <li>
             <strong>Thumbnail Design:</strong> Create captivating thumbnails for your videos or social media posts with our intuitive tools and templates.
           </li>
@@ -49,6 +50,7 @@ const InfoPage = () => {
           If you have any questions or need support, feel free to reach out to our customer service team through the contact page. We're here to help you with any inquiries or issues you may have.
         </p>
       </section>
+    </div>
     </div>
   );
 };

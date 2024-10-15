@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import stack from './contentstackconfig'; // Adjust the import path to your Contentstack SDK setup
+import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 
 const CONTENTSTACK_BLOG_CONTENT_TYPE = 'blogpost'; // Replace with your actual Content Type UID
 
@@ -45,6 +46,9 @@ const BlogPage = () => {
             <h3>{post.title}</h3> {/* Adjust according to your content structure */}
             <p>{post.summary || post.body}</p> {/* Display summary or body content */}
             <h3>{post.description}</h3>
+            <div>
+              <Link to={`/${post.uid}`} className="read-more">Read More</Link>
+            </div>
           </div>
         ))}
       </div>

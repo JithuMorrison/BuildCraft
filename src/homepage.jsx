@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Header from './header';
 import Footer from './footer';
 import stack from './contentstackconfig'; // Import your Contentstack client
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import HexagonGraphic from './hexo';
+import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 
 const CONTENTSTACK_HEADER_CONTENT_TYPE = 'homepageimages'; // Replace with your actual content type
 const CONTENTSTACK_SERVICES_CONTENT_TYPE = 'services'; // Replace with your actual services content type
@@ -11,7 +15,7 @@ const CONTENTSTACK_ABOUT_ME_CONTENT_TYPE = 'aboutme'; // Add your About Me conte
 
 const HomePage = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const [headerData, setHeaderData] = useState({ title: '', leftImageUrl: '', rightImageUrl: '' });
+  const [headerData, setHeaderData] = useState({ title: '', leftImageUrl: '', rightImageUrl: '',FirstImageUrl:'',spaceImageUrl:'' });
   const [aboutMe, setAboutMe] = useState('');
   const [services, setServices] = useState([]);
   const [blogPosts, setBlogPosts] = useState([]);
@@ -24,14 +28,18 @@ const HomePage = () => {
     const fetchHeaderData = async () => {
       try {
         const response = await stack.ContentType(CONTENTSTACK_HEADER_CONTENT_TYPE).Query().toJSON().find();
-        const data = response[0][0];
-        const leftImageUrl = data.image.url; 
-        const rightImageUrl = data.image.url;
+        const data = response[0];
+        const leftImageUrl = data[data.length-1].image.url; 
+        const rightImageUrl = data[data.length-2].image.url;
+        const FirstImageUrl = data[data.length-3].image.url;
+        const spaceImageUrl = data[data.length-4].image.url;
         
         setHeaderData({
           title: data.title,
           leftImageUrl: leftImageUrl,
           rightImageUrl: rightImageUrl,
+          FirstImageUrl:FirstImageUrl,
+          spaceImageUrl:spaceImageUrl,
         });
       } catch (error) {
         console.error('Error fetching header data:', error);
@@ -52,7 +60,6 @@ const HomePage = () => {
       try {
         const response = await stack.ContentType(CONTENTSTACK_SERVICES_CONTENT_TYPE).Query().toJSON().find();
         setServices(response[0]); // Adjust based on your content structure
-        console.log(response[0]);
       } catch (error) {
         console.error('Error fetching services data:', error);
       }
@@ -78,7 +85,7 @@ const HomePage = () => {
       <Header />
 
       <button className="toggle-button" onClick={toggleSidebar}>
-        {isSidebarVisible ? 'Hide Menu' : 'Show Menu'}
+        {isSidebarVisible ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
       </button>
 
       {isSidebarVisible && (
@@ -92,7 +99,25 @@ const HomePage = () => {
         </aside>
       )}
 
-      <main className="home-main">
+      <div style={{display:'flex',marginTop:'250px'}}>
+      <div style={{marginLeft:'60px',marginBottom:'50px'}}>
+        <h1>BuildCraft: Craft Stunning Visuals</h1>
+        <h2 style={{color:'white',fontSize:40,marginTop:'30px'}}>Unleash Your Creativity,</h2>
+        <h2 style={{color:'#7c4dff',fontSize:40,marginTop:'-10px'}}>Design Like a Pro!</h2>
+        <p style={{width:'900px',marginTop:'30px'}}>
+        Create faster. Design smarter. Bring your creative ideas to life with Design Studio, the ultimate platform for building captivating visuals, UI designs, and custom graphics. From beginners to pros, our intuitive, AI-powered design tools make it easier than ever to design, personalize, and publish beautiful content. Whether it's social media graphics, presentations, or complete UI prototypes, let your vision shine with Design Studio — your creative partner for designing without limits.
+        </p>
+        </div>
+        <img src={headerData.FirstImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'400px',height:'320px',marginLeft:'150px',marginBottom:'100px'}} />
+        </div>
+
+        <div style={{display:'flex'}}>
+        <img src={headerData.spaceImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'500px',height:'500px',marginLeft:'70px',objectFit:'cover'}} />
+        <HexagonGraphic/>
+        </div>
+
+
+      <main className="home-main" style={{marginTop:'100px'}}>
         {/* Header Section */}
         <div className="header-images">
           <img src={headerData.leftImageUrl} alt="Left Decorative" className="left-image" />
@@ -100,14 +125,14 @@ const HomePage = () => {
         </div>
 
         {/* About Me Section */}
-        <section className="about-section">
+        <section className="about-section" id='about'>
           <div className="card about-card">
             <h2>About Me</h2>
             <div dangerouslySetInnerHTML={{ __html: aboutMe }}/>
             <div className="social-links">
-              <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://www.youtube.com/channel/yourchannel" target="_blank" rel="noopener noreferrer">YouTube</a>
-              <a href="https://www.nexzjen.com" target="_blank" rel="noopener noreferrer">Website</a>
+              <a href="https://www.linkedin.com/in/jithu-morrison-s/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://www.youtube.com/@JackOrganisation" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a href="https://jithumorrison.github.io/" target="_blank" rel="noopener noreferrer">Website</a>
             </div>
           </div>
         </section>
@@ -118,7 +143,7 @@ const HomePage = () => {
           <div className="services-container">
             {services.map((service, index) => (
               <div className="card service-card" key={service.id || index}>
-                <h3>{service.title}</h3>
+                <h3 style={{color:'#7c4dff'}}>{service.title}</h3>
                 <p>{service.description}</p>
               </div>
             ))}
@@ -133,7 +158,12 @@ const HomePage = () => {
               <div className="card blog-card" key={post.id || index}>
                 <h3>{post.title}</h3>
                 <p>{post.description}</p>
-                <a href={`/blog/${post.id}`} className="read-more">Read More</a>
+                <div>
+                    <img src={post.image.url} alt="blog" style={{borderRadius:'50px',width:'200px',height:'200px',objectFit:'cover'}} />
+                </div>
+                <div>
+                  <Link to={`/${post.uid}`} className="read-more">Read More</Link>
+                </div>
               </div>
             ))}
           </div>

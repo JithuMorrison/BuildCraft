@@ -51,29 +51,81 @@ const Templatebar = ({ images, handleDragStart, setImages }) => {
     console.log("Updated images:", images);
   }, [images]);
 
+  const styles = {
+        container: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '20px',
+          backgroundColor: 'darkgray',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        },
+        form: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          maxWidth: '600px',
+          marginBottom: '15px',
+        },
+        urlInput: {
+          flex: 1,
+          padding: '10px',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          marginRight: '10px',
+          fontSize: '16px',
+          marginLeft: '7px',
+          width: '50px'
+        },
+        uploadContainer: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '600px',
+        },
+        uploadLabel: {
+          marginBottom: '10px',
+          fontSize: '18px',
+          color: '#333',
+        },
+        fileInput: {
+          display: 'none', // Hides the default file input
+        },
+      };  
+
   return (
     <div className="template-sidebar">
       <h3>Template</h3>
 
       {/* Input for URL */}
-      <form onSubmit={handleUrlSubmit} style={{ marginBottom: '10px' }}>
-        <input 
-          type="text" 
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)} 
-          placeholder="Enter image URL" 
-          style={{ marginRight: '10px', width: '70%' }} 
-        />
-      </form>
+      <div style={styles.container}>
+        <form onSubmit={handleUrlSubmit} style={styles.form}>
+          <input 
+            type="text" 
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)} 
+            placeholder="Enter image URL" 
+            style={styles.urlInput} 
+          />
+        </form>
 
-      {/* Input for file upload */}
-      <input 
-        type="file" 
-        accept="image/*" 
-        multiple 
-        onChange={handleImageUpload} 
-        style={{ marginBottom: '10px' }}
-      />
+        {/* Input for file upload */}
+        <div style={styles.uploadContainer}>
+          <label style={styles.uploadLabel} htmlFor="file-upload">
+            Upload Images
+          </label>
+          <input 
+            id="file-upload"
+            type="file" 
+            accept="image/*" 
+            multiple 
+            onChange={handleImageUpload} 
+            style={styles.fileInput}
+          />
+        </div>
+      </div>
       
       <div className="image-list">
         {Object.keys(groupedImages).map((tag) => (

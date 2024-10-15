@@ -66,6 +66,7 @@ nav ul li a {
 
 nav ul li a:hover {
   text-decoration: underline; /* Underline on hover */
+  color: #f7f7f7;
 }
 
 .footer {
@@ -191,19 +192,19 @@ nav ul li a:hover {
 .right-image {
   position: absolute; /* Position images absolutely */
   top: 20px; /* Align with top of the card */
-  width: 100px; /* Width of the side images */
+  width: 500px; /* Width of the side images */
   height: auto; /* Maintain aspect ratio */
-  opacity: 0.1; /* Low opacity for a subtle effect */
+  opacity: 0.3; /* Low opacity for a subtle effect */
 }
 
 .left-image {
   top: 100px;
-  left: 100px; /* Position on the left side */
+  left: 20px; /* Position on the left side */
 }
 
 .right-image {
   top: 100px;
-  right: 100px; /* Position on the right side */
+  right: 20px; /* Position on the right side */
 }
 
 /* General Card Styles */
@@ -239,6 +240,7 @@ nav ul li a:hover {
   margin-left: auto;
   margin-right: auto;
   width: 550px;
+  z-index: 2;
 }
 
 .about-section .social-links a {
@@ -307,12 +309,12 @@ nav ul li a:hover {
 .toggle-button {
   position: fixed; /* Fixed position for button */
   top: 10px; /* Position at the top */
-  left: 90px; /* Position on the left */
+  left: 40px; /* Position on the left */
   background-color: #4A90E2; /* Button background color */
   color: white; /* Text color */
   border: none; /* No border */
   border-radius: 5px; /* Rounded corners */
-  width: 125px;
+  width: 25px;
   cursor: pointer; /* Pointer on hover */
   z-index: 1000; /* Ensure button stays on top */
 }
@@ -323,7 +325,7 @@ nav ul li a:hover {
 }
 
 .toggle-button:hover {
-  background-color: #357ABD; /* Darker shade on hover */
+  background-color: #4A90E2; /* Darker shade on hover */
 }
 
 .info-page {
@@ -435,4 +437,261 @@ ul {
 
 .big-blog-card:hover {
   transform: scale(1.01); /* Scale effect on hover */
+}
+
+.hex-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.hexagon {
+  position: relative;
+  width: 300px;
+  height: 346.4px;
+  background-color: #ff66cc;
+  margin: 0 auto;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transform: rotate(0deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-hex {
+  position: absolute;
+  width: 240px;
+  height: 276px;
+  background: linear-gradient(to right, #ff0099, #cc00ff);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.label {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.channel-label {
+  position: absolute;
+  top: -30px;
+  left: -10px;
+  color: black;
+}
+
+.hexa1, .hexa2, .hexa3, .hexa4, .hexa5, .hexa6{
+  position: absolute;
+  width: 50px;
+  height: 57.7px;
+  background-color: white;
+  border: 2px #ff0099;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hex1, .hex2, .hex3, .hex4, .hex5, .hex6 {
+  position: relative;
+  width: 40px;
+  height: 43.9px;
+  background-color: #ff99cc;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexa1 {
+  top: 10px;
+  left: 50px;
+  animation: rotate 8s infinite linear; 
+}
+
+.hexa2 {
+  top: 10px;
+  right: 50px;
+  animation: rotate 12s infinite linear reverse;
+}
+
+.hexa3 {
+  bottom: 100px;
+  left: -25px;
+  animation: rotate 10s infinite linear;
+}
+
+.hexa4 {
+  bottom: 100px;
+  right: -25px;
+  animation: rotate 14s infinite linear reverse;
+}
+
+.hexa5 {
+  bottom: -30px;
+  left: 50px;
+  animation: rotate 9s infinite linear;
+}
+
+.hexa6 {
+  bottom: -30px;
+  right: 50px;
+  animation: rotate 11s infinite linear reverse;
+}
+
+.cardo {
+  width: 300px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  text-align: center;
+}
+
+.cardo h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cardo h2 {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.cardo p {
+  font-size: 14px;
+  color: #777;
+  line-height: 1.5;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.blog-post-wrapper {
+  display: flex;                /* Use flexbox */
+  justify-content: center;      /* Center horizontally */
+  align-items: center;          /* Center vertically */
+  min-height: 100vh;           /* Full viewport height */
+  width: 1700px;
+}
+
+.blog-post-container {
+  width: 1000px; /* Limit the width for better readability */
+  margin: 0 auto; /* Center the container */
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px; /* Space between back button and post */
+  padding: 10px 15px;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.post-title {
+  font-size: 2.5rem; /* Large title size */
+  margin-bottom: 15px;
+  color: #333; /* Dark text color */
+}
+
+.post-image {
+  width: 80%; /* Responsive image */
+  height: auto;
+  border-radius: 10px; /* Rounded corners for the image */
+  margin-bottom: 20px; /* Space below the image */
+}
+
+.post-content {
+  font-size: 1.1rem; /* Readable font size */
+  line-height: 1.6; /* Better line height for readability */
+  color: #555; /* Slightly lighter text color */
+}
+
+.post-content ul {
+  list-style-type: none;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem; /* Larger text for loading state */
+  margin: 50px 0; /* Space around loading message */
+}
+
+.error {
+  text-align: center;
+  font-size: 1.5rem; /* Larger text for error message */
+  color: red; /* Red color for errors */
+  margin: 50px 0; /* Space around error message */
+}
+
+.home-footer {
+  background-color: #282c34; /* Dark background */
+  color: white;               /* White text */
+  padding: 20px;              /* Padding around footer */
+  text-align: center;         /* Center text */
+}
+
+.footer-content {
+  max-width: 1200px;         /* Limit width for larger screens */
+  margin: 0 auto;            /* Center footer content */
+}
+
+.footer-nav {
+  margin: 10px 0;            /* Space between text and nav */
+}
+
+.footer-nav ul {
+  list-style: none;          /* Remove bullets from list */
+  padding: 0;               /* Remove padding */
+  display: flex;            /* Flex layout for nav items */
+  justify-content: center;   /* Center nav items */
+}
+
+.footer-nav li {
+  margin: 0 15px;           /* Space between nav items */
+}
+
+.footer-nav a {
+  color: white;             /* White text for links */
+  text-decoration: none;     /* Remove underline from links */
+  transition: color 0.3s;   /* Smooth color transition */
+}
+
+.footer-nav a:hover {
+  color: #61dafb;           /* Change color on hover */
+}
+
+.social-media {
+  margin-top: 10px;         /* Space above social media links */
+}
+
+.social-media a {
+  margin: 0 10px;           /* Space between social media links */
+  color: white;             /* White text for links */
+  text-decoration: none;     /* Remove underline from links */
+}
+
+.social-media a:hover {
+  color: #61dafb;           /* Change color on hover */
 }
