@@ -93,6 +93,7 @@ const HomePage = () => {
           <h2>Dashboard</h2>
           <ul>
             <li><a href="/drag-drop">Create Design</a></li>
+            <li><a href='/visuals'>Visuals</a></li>
             <li><a href="/info">Documentation</a></li>
             <li><a href="/blog">Latest Blog Posts</a></li>
           </ul>

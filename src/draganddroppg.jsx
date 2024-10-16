@@ -12,11 +12,16 @@ const DragDropPage = () => {
   const [resizeOffset, setResizeOffset] = useState({ width: 0, height: 0 });
   const [images, setImages] = useState([]);
   const [showDesignPanel, setShowDesignPanel] = useState(false);
-  const [activeTab, setActiveTab] = useState('design'); // 'design' or 'template'
   const [designAreaSize, setDesignAreaSize] = useState({ width: 500, height: 500 });
   const [selectedItem, setSelectedItem] = useState(null); // Track currently selected image item
   const [clipboard, setClipboard] = useState(null); // State to store cut/copy items
   const designAreaRef = useRef(); // Ref for the design area to capture its content
+  const [DesignNameValue, setDesignNameValue] = useState('');
+
+  // Function to handle input changes
+  const handleInputChange = (event) => {
+    setDesignNameValue(event.target.value);
+  };
 
   // Fetch images from Contentstack
   const fetchImages = async () => {
@@ -28,10 +33,17 @@ const DragDropPage = () => {
         for (let i = 0; i < result[0].length; i++) {
           const entry = result[0][i];
           const imageUrl = entry.contentimage.url != null ? entry.contentimage.url : '';
-          console.log(entry);
+          const response = await fetch(imageUrl);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          // Convert the response to a blob
+          const blob = await response.blob();
+          // Create an object URL from the blob
+          const newObjectUrl = URL.createObjectURL(blob);
           fetchedImages.push({
             id: entry.uid, // Use the unique identifier
-            src: imageUrl,  // Safely access the image URL
+            src: newObjectUrl,  // Safely access the image URL
             title: entry.title,
             tag: entry.tags[0],
           });
@@ -233,7 +245,6 @@ const DragDropPage = () => {
   };
 
   const saveDesignAreaAsImage = async () => {
-    console.log(designAreaRef);
     if (designAreaRef.current) {
       // Create an array of promises for loading all images
       const imageLoadPromises = designAreaItems.map(async (item) => {
@@ -265,14 +276,145 @@ const DragDropPage = () => {
       });
     }
   };
+
+  const saveDesignToLocalStorage = async () => {
+    if (DesignNameValue) {
+        const storageKey = `savedDesign_${DesignNameValue}`;
+        
+        // Convert image data to base64 with compression
+        const itemsWithBase64 = await Promise.all(designAreaItems.map(async (item) => {
+            if (item.src.startsWith('blob:') || item.src.startsWith('data:')) {
+                const response = await fetch(item.src);
+                const blob = await response.blob();
+
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        // Adjust the canvas size to maintain the aspect ratio if necessary
+                        const scaleFactor = 0.5; // Adjust this factor to control compression
+                        canvas.width = img.width * scaleFactor;
+                        canvas.height = img.height * scaleFactor;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        // Convert to base64 with lower quality
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.7); // No callback needed here
+                        resolve({ ...item, src: dataUrl });
+                    };
+                    img.onerror = reject;
+                    img.src = URL.createObjectURL(blob);
+                });
+            }
+            return item; // Return the item unchanged if not a blob or data URL
+        }));
+
+        const designData = {
+            designAreaSize,
+            items: itemsWithBase64,
+        };
+
+        try {
+            // Save the design data to localStorage
+            localStorage.setItem(storageKey, JSON.stringify(designData));
+
+            // Update the list of saved design names
+            const savedDesignsKey = 'MyDesigns';
+            let savedDesigns = JSON.parse(localStorage.getItem(savedDesignsKey)) || [];
+            
+            // Add the new design name if it doesn't already exist
+            if (!savedDesigns.includes(DesignNameValue)) {
+                savedDesigns.push(DesignNameValue);
+                localStorage.setItem(savedDesignsKey, JSON.stringify(savedDesigns));
+            }
+            alert(`Design saved successfully as "${DesignNameValue}"!`);
+        } catch (error) {
+            console.error('Error saving design:', error);
+            alert('Failed to save design. The design might be too large for local storage.');
+        }
+    } else {
+        alert("Design not saved. Please provide a name.");
+    }
+};
+
+const loadDesignFromLocalStorage = () => {
+  // Prompt the user for the design name
+  const designName = prompt("Enter the name of the design to load:");
+  if (!designName) {
+      alert("No design name provided. Operation cancelled.");
+      return; // Exit if no name is provided
+  }
+
+  const storageKey = `savedDesign_${designName}`;
+  const savedDesign = localStorage.getItem(storageKey);
   
+  if (savedDesign) {
+      try {
+          const parsedDesign = JSON.parse(savedDesign);
+          setDesignAreaSize(parsedDesign.designAreaSize);
+          
+          // Convert base64 back to blob URLs
+          const itemsWithBlobUrls = parsedDesign.items.map(item => {
+              if (item.src.startsWith('data:')) {
+                  // Decode the base64 string
+                  const byteString = atob(item.src.split(',')[1]);
+                  const mimeString = item.src.split(',')[0].split(':')[1].split(';')[0];
+                  const ab = new ArrayBuffer(byteString.length);
+                  const ia = new Uint8Array(ab);
+                  
+                  // Populate the Uint8Array with the byte values
+                  for (let i = 0; i < byteString.length; i++) {
+                      ia[i] = byteString.charCodeAt(i);
+                  }
+                  
+                  // Create a blob from the ArrayBuffer
+                  const blob = new Blob([ab], { type: mimeString });
+                  return { ...item, src: URL.createObjectURL(blob) };
+              }
+              return item; // Return item as is if it's not base64
+          });
+
+          // Update the design area items with the new blob URLs
+          setDesignAreaItems(itemsWithBlobUrls);
+          setDesignNameValue(designName);
+          alert(`Design "${designName}" loaded successfully!`);
+      } catch (error) {
+          console.error('Error loading design:', error);
+          alert('Failed to load design. The saved data might be corrupted.');
+      }
+  } else {
+      alert(`No saved design found with the name "${designName}".`);
+  }
+};
+
+
 
   return (
     <div className="drag-drop-container">
       <Templatebar images={images} handleDragStart={handleDragStart} setImages={setImages}/>
 
       <div className="design-area-container">
-      <button onClick={saveDesignAreaAsImage} className='toggle-design-panel2'>Save as Image</button> {/* Button to save design area */}
+      <input
+        type="text"
+        id="textInput"
+        value={DesignNameValue}
+        onChange={handleInputChange}
+        placeholder="Enter Design Name..."
+        style={{
+          height: '30px', 
+          position: 'absolute', 
+          top: '-20px', 
+          left: '170px',
+          zIndex: 1000, // Ensure it appears above other elements
+          backgroundColor: 'white', // Background color to make it readable
+          border: '1px solid #ccc', // Optional: border for better visibility
+          padding: '5px', // Optional: padding for better spacing
+          boxShadow: '0 2px 5px rgba(0,0,0,0.2)', // Optional: shadow for depth
+          color:'black',
+        }}
+      />
+      <button onClick={saveDesignAreaAsImage} className='toggle-design-panel2' style={{zIndex:1000}}>Save as Image</button> {/* Button to save design area */}
+      <button onClick={saveDesignToLocalStorage} className='toggle-design-panel2' style={{marginRight:'405px',zIndex:1000}}>Save Design</button>
+        <button onClick={loadDesignFromLocalStorage} className='toggle-design-panel2' style={{marginRight:'530px',zIndex:1000}}>Load Design</button>
         <div
           ref={designAreaRef}
           className="design-area"

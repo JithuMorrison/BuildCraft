@@ -30,26 +30,36 @@ const Templatebar = ({ images, handleDragStart, setImages }) => {
   };
 
   // Handle image URL submission
-  const handleUrlSubmit = (e) => {
+  const handleUrlSubmit = async (e) => {
     e.preventDefault();
+    
     if (imageUrl) {
-      const newImage = {
-        id: (new Date().getTime() + Math.random()).toString(), // Generate a unique ID
-        src: imageUrl,
-        title: imageUrl.split('/')[0], // Extract title from URL
-        tag: 'URL', // Categorize as "URL"
-      };
-      
-      // Update the images state in the parent component
-      setImages((prevImages) => [...prevImages, newImage]);
-      setImageUrl(''); // Clear the input field
+      try {
+        // Fetch the image from the URL
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Convert the response to a blob
+        const blob = await response.blob();
+        // Create an object URL from the blob
+        const newObjectUrl = URL.createObjectURL(blob);
+
+        const newImage = {
+          id: (new Date().getTime() + Math.random()).toString(), // Generate a unique ID
+          src: newObjectUrl, // Use the object URL
+          title: imageUrl.split('/').pop(), // Extract title from URL
+          tag: 'URL', // Categorize as "URL"
+        };
+
+        // Update the images state in the parent component
+        setImages((prevImages) => [...prevImages, newImage]);
+        setImageUrl(''); // Clear the input field
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
     }
   };
-
-  // Log images when they change
-  useEffect(() => {
-    console.log("Updated images:", images);
-  }, [images]);
 
   const styles = {
         container: {
