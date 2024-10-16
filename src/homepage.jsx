@@ -80,6 +80,36 @@ const HomePage = () => {
     fetchBlogPostsData();
   }, []);
 
+  const plans = [
+    {
+        name: "Free Version",
+        price: "$0",
+        features: [
+            "Design without saving",
+            "Max 2 designs",
+            "No load option"
+        ]
+    },
+    {
+        name: "Standard Version",
+        price: "$14",
+        features: [
+            "Save up to 10 designs",
+            "Load saved designs",
+            "Design without restrictions"
+        ]
+    },
+    {
+        name: "Pro Version",
+        price: "$100",
+        features: [
+            "Unlimited designs",
+            "Save and load options",
+            "Full feature access"
+        ]
+    },
+];
+
   return (
     <div className="home-container">
       <Header />
@@ -150,6 +180,23 @@ const HomePage = () => {
             ))}
           </div>
         </section>
+
+        <div className="pricecontainer">
+            <h1 style={{ color: 'white' }}>Pricing Plans</h1>
+            <div className="pricecard-container">
+                {plans.map((plan, index) => (
+                    <div key={index} className="pricecard">
+                        <h3 style={{ color: 'white' }}>{plan.name}</h3>
+                        <h2 style={{ color: 'white' }}>{plan.price}</h2>
+                        <ul className="pricefeatures-list">
+                            {plan.features.map((feature, featureIndex) => (
+                                <li key={featureIndex} style={{ color: 'white' }}>{feature}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
 
         {/* Blog Section */}
         <section id="blog">
