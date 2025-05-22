@@ -35,7 +35,7 @@ const DragDropPage = () => {
   // Fetch images from Contentstack
   const fetchImages = async () => {
     try {
-      const Query = stack.ContentType('contents').Query();
+      const Query = stack.ContentType('UID').Query();
       const result = await Query.toJSON().find(); // Fetching entries from Contentstack
       const fetchedImages = [];
       if (result[0].length > 0) {
