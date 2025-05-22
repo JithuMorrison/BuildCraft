@@ -3,6 +3,7 @@ import stack from './contentstackconfig';
 import './drop.css'; // Ensure you have this CSS file for styling
 import Templatebar from './templatebar';
 import html2canvas from 'html2canvas';
+import { useSearchParams } from 'react-router-dom';
 
 const DragDropPage = () => {
   const [designAreaItems, setDesignAreaItems] = useState([]);
@@ -17,6 +18,14 @@ const DragDropPage = () => {
   const [clipboard, setClipboard] = useState(null); // State to store cut/copy items
   const designAreaRef = useRef(); // Ref for the design area to capture its content
   const [DesignNameValue, setDesignNameValue] = useState('');
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const designToLoad = searchParams.get('design');
+    if (designToLoad) {
+      loadDesignFromLocalStoragethruvisual(designToLoad);
+    }
+  }, []);
 
   // Function to handle input changes
   const handleInputChange = (event) => {
@@ -386,7 +395,52 @@ const loadDesignFromLocalStorage = () => {
   }
 };
 
+const loadDesignFromLocalStoragethruvisual = (designName) => {
+  if (!designName) {
+      alert("No design name provided. Operation cancelled.");
+      return; // Exit if no name is provided
+  }
+  const storageKey = `savedDesign_${designName}`;
+  const savedDesign = localStorage.getItem(storageKey);
+  
+  if (savedDesign) {
+      try {
+          const parsedDesign = JSON.parse(savedDesign);
+          setDesignAreaSize(parsedDesign.designAreaSize);
+          
+          // Convert base64 back to blob URLs
+          const itemsWithBlobUrls = parsedDesign.items.map(item => {
+              if (item.src.startsWith('data:')) {
+                  // Decode the base64 string
+                  const byteString = atob(item.src.split(',')[1]);
+                  const mimeString = item.src.split(',')[0].split(':')[1].split(';')[0];
+                  const ab = new ArrayBuffer(byteString.length);
+                  const ia = new Uint8Array(ab);
+                  
+                  // Populate the Uint8Array with the byte values
+                  for (let i = 0; i < byteString.length; i++) {
+                      ia[i] = byteString.charCodeAt(i);
+                  }
+                  
+                  // Create a blob from the ArrayBuffer
+                  const blob = new Blob([ab], { type: mimeString });
+                  return { ...item, src: URL.createObjectURL(blob) };
+              }
+              return item; // Return item as is if it's not base64
+          });
 
+          // Update the design area items with the new blob URLs
+          setDesignAreaItems(itemsWithBlobUrls);
+          setDesignNameValue(designName);
+          alert(`Design "${designName}" loaded successfully!`);
+      } catch (error) {
+          console.error('Error loading design:', error);
+          alert('Failed to load design. The saved data might be corrupted.');
+      }
+  } else {
+      alert(`No saved design found with the name "${designName}".`);
+  }
+};
 
   return (
     <div className="drag-drop-container">
