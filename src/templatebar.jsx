@@ -1,156 +1,91 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Templatebar = ({ images, handleDragStart, setImages }) => {
   const [imageUrl, setImageUrl] = useState('');
 
-  // Group images by title
   const groupedImages = images.reduce((acc, image) => {
-    if (!acc[image.tag]) {
-      acc[image.tag] = []; // Create a new array for this title if it doesn't exist
-    }
-    acc[image.tag].push(image); // Add image to the appropriate title group
+    if (!acc[image.tag]) acc[image.tag] = [];
+    acc[image.tag].push(image);
     return acc;
   }, {});
 
-  // Handle image upload from file input
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map((file) => {
-      const url = URL.createObjectURL(file);
-      return {
-        id: (new Date().getTime() + Math.random()).toString(), // Generate a unique ID
-        src: url,
-        title: file.name,
-        tag: 'Uploaded', // Categorize as "Uploaded"
-      };
-    });
-
-    // Update the images state in the parent component
-    setImages((prevImages) => [...prevImages, ...newImages]);   
+    const newImages = files.map((file) => ({
+      id: (new Date().getTime() + Math.random()).toString(),
+      src: URL.createObjectURL(file),
+      title: file.name,
+      tag: 'Uploaded',
+    }));
+    setImages((prevImages) => [...prevImages, ...newImages]);
   };
 
-  // Handle image URL submission
   const handleUrlSubmit = async (e) => {
     e.preventDefault();
-    
-    if (imageUrl) {
-      try {
-        // Fetch the image from the URL
-        const response = await fetch(imageUrl);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        // Convert the response to a blob
-        const blob = await response.blob();
-        // Create an object URL from the blob
-        const newObjectUrl = URL.createObjectURL(blob);
+    if (!imageUrl.trim()) return;
 
-        const newImage = {
-          id: (new Date().getTime() + Math.random()).toString(), // Generate a unique ID
-          src: newObjectUrl, // Use the object URL
-          title: imageUrl.split('/').pop(), // Extract title from URL
-          tag: 'URL', // Categorize as "URL"
-        };
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) throw new Error('Invalid image URL');
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
 
-        // Update the images state in the parent component
-        setImages((prevImages) => [...prevImages, newImage]);
-        setImageUrl(''); // Clear the input field
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      }
+      const newImage = {
+        id: (new Date().getTime() + Math.random()).toString(),
+        src: objectUrl,
+        title: imageUrl.split('/').pop(),
+        tag: 'URL',
+      };
+
+      setImages((prevImages) => [...prevImages, newImage]);
+      setImageUrl('');
+    } catch (error) {
+      console.error('Error fetching image:', error);
     }
   };
 
-  const styles = {
-        container: {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '20px',
-          backgroundColor: 'darkgray',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-        },
-        form: {
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
-          maxWidth: '600px',
-          marginBottom: '15px',
-        },
-        urlInput: {
-          flex: 1,
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          marginRight: '10px',
-          fontSize: '16px',
-          marginLeft: '7px',
-          width: '50px'
-        },
-        uploadContainer: {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: '600px',
-        },
-        uploadLabel: {
-          marginBottom: '10px',
-          fontSize: '18px',
-          color: '#333',
-        },
-        fileInput: {
-          display: 'none', // Hides the default file input
-        },
-      };  
-
   return (
-    <div className="template-sidebar">
-      <h3>Template</h3>
+    <div style={styles.sidebar}>
+      <h3 style={styles.heading}>Template</h3>
 
-      {/* Input for URL */}
-      <div style={styles.container}>
-        <form onSubmit={handleUrlSubmit} style={styles.form}>
-          <input 
-            type="text" 
+      <div style={styles.controls}>
+        <form onSubmit={handleUrlSubmit} style={styles.urlForm}>
+          <input
+            type="text"
             value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)} 
-            placeholder="Enter image URL" 
-            style={styles.urlInput} 
+            onChange={(e) => setImageUrl(e.target.value)}
+            placeholder="Enter image URL"
+            style={styles.input}
           />
         </form>
 
-        {/* Input for file upload */}
-        <div style={styles.uploadContainer}>
-          <label style={styles.uploadLabel} htmlFor="file-upload">
-            Upload Images
-          </label>
-          <input 
-            id="file-upload"
-            type="file" 
-            accept="image/*" 
-            multiple 
-            onChange={handleImageUpload} 
-            style={styles.fileInput}
+        <label htmlFor="upload" style={styles.uploadButton}>
+          Upload Images
+          <input
+            type="file"
+            id="upload"
+            accept="image/*"
+            multiple
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
           />
-        </div>
+        </label>
       </div>
-      
-      <div className="image-list">
+
+      <div style={styles.imageList}>
         {Object.keys(groupedImages).map((tag) => (
-          <div key={tag} className="title-group">
-            <h4 style={{ color: 'black' }}>{tag}</h4> {/* Title subheading */}
-            <div className="image-items">
+          <div key={tag} style={styles.imageGroup}>
+            <h4 style={styles.groupTitle}>{tag}</h4>
+            <div style={styles.imageGrid}>
               {groupedImages[tag].map((image) => (
                 <div
                   key={image.id}
                   draggable
                   onDragStart={(e) => handleDragStart(e, image)}
-                  className="image-item"
+                  style={styles.imageCard}
                 >
-                  <img src={image.src} alt={`Image ${image.id}`} />
-                  <div style={{ color: 'black' }}>{image.title}</div> {/* Image title */}
+                  <img src={image.src} alt={image.title} style={styles.thumbnail} />
+                  <div style={styles.imageTitle}>{image.title}</div>
                 </div>
               ))}
             </div>
@@ -161,4 +96,102 @@ const Templatebar = ({ images, handleDragStart, setImages }) => {
   );
 };
 
+// Styles
+const styles = {
+  sidebar: {
+    padding: '20px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '12px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+    width: '350px',
+    overflowY: 'auto',
+  },
+  heading: {
+    textAlign: 'center',
+    marginBottom: '20px',
+    fontSize: '24px',
+    color: '#333',
+  },
+  controls: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+    marginBottom: '25px',
+    alignItems: 'center',
+  },
+  urlForm: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    maxWidth: '500px',
+    gap: '10px',
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    padding: '10px',
+    fontSize: '16px',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+  },
+  button: {
+    padding: '10px 15px',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  },
+  uploadButton: {
+    padding: '10px 15px',
+    backgroundColor: '#2196F3',
+    color: 'white',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontSize: '16px',
+  },
+  imageList: {
+    marginTop: '10px',
+  },
+  imageGroup: {
+    marginBottom: '30px',
+  },
+  groupTitle: {
+    fontSize: '20px',
+    color: '#444',
+    borderBottom: '2px solid #ddd',
+    paddingBottom: '5px',
+    marginBottom: '15px',
+  },
+  imageGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
+    gap: '15px',
+  },
+  imageCard: {
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    borderRadius: '10px',
+    padding: '10px',
+    textAlign: 'center',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+    transition: 'transform 0.2s ease',
+    cursor: 'grab',
+  },
+  thumbnail: {
+    width: '100%',
+    height: 'auto',
+    borderRadius: '6px',
+    objectFit: 'cover',
+    marginBottom: '5px',
+  },
+  imageTitle: {
+    fontSize: '12px',
+    color: '#333',
+    wordBreak: 'break-word',
+  },
+};
+
 export default Templatebar;
+

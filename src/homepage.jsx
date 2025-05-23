@@ -8,10 +8,10 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import HexagonGraphic from './hexo';
 import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 
-const CONTENTSTACK_HEADER_CONTENT_TYPE = 'CONTENT TYPE UID'; // Replace with your actual content type
-const CONTENTSTACK_SERVICES_CONTENT_TYPE = 'CONTENT TYPE UID'; // Replace with your actual services content type
-const CONTENTSTACK_BLOG_CONTENT_TYPE = 'CONTENT TYPE UID'; // Replace with your actual blog content type
-const CONTENTSTACK_ABOUT_ME_CONTENT_TYPE = 'CONTENT TYPE UID'; // Add your About Me content type
+const CONTENTSTACK_HEADER_CONTENT_TYPE = 'homepageimages'; // Replace with your actual content type
+const CONTENTSTACK_SERVICES_CONTENT_TYPE = 'services'; // Replace with your actual services content type
+const CONTENTSTACK_BLOG_CONTENT_TYPE = 'blogpost'; // Replace with your actual blog content type
+const CONTENTSTACK_ABOUT_ME_CONTENT_TYPE = 'aboutme'; // Add your About Me content type
 
 const HomePage = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);

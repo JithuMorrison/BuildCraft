@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import stack from './contentstackconfig';
 
-const CONTENTSTACK_BLOG_CONTENT_TYPE = 'Content type UID';
+const CONTENTSTACK_BLOG_CONTENT_TYPE = 'blogpost';
 
 const BlogPost = () => {
   const { id } = useParams();
