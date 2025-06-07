@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import stack from './contentstackconfig'; // Adjust the import path to your Contentstack SDK setup
 import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 
-const CONTENTSTACK_BLOG_CONTENT_TYPE = 'blogpost'; // Replace with your actual Content Type UID
+const CONTENTSTACK_BLOG_CONTENT_TYPE = import.meta.env.VITE_BCT; // Replace with your actual Content Type UID
 
 const BlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]); // State to hold blog posts

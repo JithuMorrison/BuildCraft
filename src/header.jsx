@@ -4,7 +4,7 @@ import stack from './contentstackconfig';
 
 const Header = () => {
   const [headerData, setHeaderData] = useState(null);
-  const CONTENTSTACK_HEADER_CONTENT_TYPE = 'header'; // Your content type
+  const CONTENTSTACK_HEADER_CONTENT_TYPE = import.meta.env.VITE_HCT;
 
   useEffect(() => {
     const fetchHeaderData = async () => {

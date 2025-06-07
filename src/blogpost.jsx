@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import stack from './contentstackconfig';
 
-const CONTENTSTACK_BLOG_CONTENT_TYPE = 'blogpost';
+const CONTENTSTACK_BLOG_CONTENT_TYPE = import.meta.env.VITE_BCT;
 
 const BlogPost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true); // New state for loading
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
