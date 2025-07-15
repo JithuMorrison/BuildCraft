@@ -8,6 +8,9 @@
 body, html {
   width: 100%; /* Ensure the body and html take up full width */
   margin: 0; /* Remove default body margin */
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .home-container {

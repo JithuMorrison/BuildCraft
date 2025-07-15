@@ -131,7 +131,7 @@ const HomePage = () => {
       )}
 
       <div style={{display:'flex',marginTop:'250px'}}>
-      <div style={{marginLeft:'60px',marginBottom:'50px'}}>
+      <div style={{marginLeft:'80px',marginBottom:'50px'}}>
         <h1>BuildCraft: Craft Stunning Visuals</h1>
         <h2 style={{color:'white',fontSize:40,marginTop:'30px'}}>Unleash Your Creativity,</h2>
         <h2 style={{color:'#7c4dff',fontSize:40,marginTop:'-10px'}}>Design Like a Pro!</h2>
@@ -139,11 +139,11 @@ const HomePage = () => {
         Create faster. Design smarter. Bring your creative ideas to life with Design Studio, the ultimate platform for building captivating visuals, UI designs, and custom graphics. From beginners to pros, our intuitive, AI-powered design tools make it easier than ever to design, personalize, and publish beautiful content. Whether it's social media graphics, presentations, or complete UI prototypes, let your vision shine with Design Studio — your creative partner for designing without limits.
         </p>
         </div>
-        <img src={headerData.FirstImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'400px',height:'320px',marginLeft:'150px',marginBottom:'100px'}} />
+        <img src={headerData.FirstImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'400px',height:'320px',marginLeft:'70px',marginBottom:'100px'}} />
         </div>
 
         <div style={{display:'flex'}}>
-        <img src={headerData.spaceImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'500px',height:'500px',marginLeft:'70px',objectFit:'cover'}} />
+        <img src={headerData.spaceImageUrl} alt="Swipe Image" style={{borderRadius:'50px',width:'500px',height:'500px',marginLeft:'40px',objectFit:'cover'}} />
         <HexagonGraphic/>
         </div>
 

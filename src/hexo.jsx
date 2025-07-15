@@ -2,7 +2,7 @@ import React from "react";
 
 const HexagonGraphic = () => {
   return (
-    <div style={{display:'flex',gap:'70px', marginLeft:'70px'}}>
+    <div style={{display:'flex',gap:'70px', marginLeft:'40px'}}>
     <div className="card" style={{width:'550px'}}>
       <h1>Web UI Design Services</h1>
       <h2>Create, Customize, and Innovate</h2>
@@ -26,7 +26,7 @@ const HexagonGraphic = () => {
         suit your needs.
       </p>
     </div>
-    <div className="hex-container" style={{marginTop:'60px'}}>
+    <div className="hex-container" style={{marginTop:'60px', marginLeft:'-40px'}}>
       <div className="hexagon">
         <div className="inner-hex">
           <span className="label">BuildCraft</span>
