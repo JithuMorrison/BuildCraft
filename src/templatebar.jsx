@@ -103,7 +103,7 @@ const styles = {
     backgroundColor: '#f9f9f9',
     borderRadius: '12px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    width: '350px',
+    width: '300px',
     overflowY: 'auto',
   },
   heading: {

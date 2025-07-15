@@ -1,7 +1,7 @@
 .drag-drop-container {
   display: flex;
-  height: 95vh;
-  width: 1680px;
+  height: 95.3vh;
+  width: 1528px;
   gap: 15px; /* Space between sidebar and design area */
   padding: 10px;
   background-color: #f0f0f0;
