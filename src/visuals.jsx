@@ -44,9 +44,9 @@ const Visuals = () => {
 const styles = {
     container: {
         padding: '40px',
-        marginLeft: '100px',
-        marginTop: '30px',
-        minHeight: '100vh',
+        marginLeft: '15px',
+        marginTop: '15px',
+        minHeight: '90vh',
         borderRadius: '24px', // Rounded corners for the entire container
         width: '1500px',
         backgroundColor: '#f8fafc',
